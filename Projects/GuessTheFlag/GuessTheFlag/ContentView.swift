@@ -119,8 +119,8 @@ struct ContentView: View {
     
     func restartGame() {
         questionsAsked = 0
-        askQuestion()
         currentScore = 0
+        askQuestion()
     }
     
     func judgeScore() -> String {
