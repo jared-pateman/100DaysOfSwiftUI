@@ -64,6 +64,11 @@ struct ContentView: View {
             return
         }
         
+        guard answer != rootWord else {
+            wordError(title: "Starting word used", message: "You can't use the starting word, that would be too easy!")
+            return
+        }
+        
         guard isOriginal(word: answer) else {
             wordError(title: "Word used already", message: "Be more original!")
             return
