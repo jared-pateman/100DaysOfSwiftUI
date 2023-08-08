@@ -51,6 +51,11 @@ struct ContentView: View {
         // exit if the remaining string is empty
         guard answer.count > 0 else { return }
         
+        guard answer.count >= 3 else {
+            wordError(title: "Word too short", message: "Please use words that are 3 characters or more!")
+            return
+        }
+        
         guard isOriginal(word: answer) else {
             wordError(title: "Word used already", message: "Be more original!")
             return
