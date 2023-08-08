@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var usedWords = [String]()
     @State private var rootWord = ""
     @State private var newWord = ""
+    @State private var userScore = 0
     
     @State private var errorTitle = ""
     @State private var errorMessage = ""
@@ -19,6 +20,10 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
+                Section("Current score") {
+                    Text("\(userScore)")
+                }
+                
                 Section {
                     TextField("Enter your word", text: $newWord)
                         .textInputAutocapitalization(.never)
@@ -74,6 +79,9 @@ struct ContentView: View {
             return
         }
         
+        // Player earns 1 point for the word + length of the word.
+        userScore += (answer.count + 1)
+        
         withAnimation {
             usedWords.insert(answer, at: 0)
         }
@@ -89,6 +97,9 @@ struct ContentView: View {
                 
                 // Clear the usedWords array.
                 usedWords = [String]()
+                // Reset userScore to 0.
+                userScore = 0
+
                 return
             }
         }
