@@ -24,6 +24,7 @@ struct ContentView: View {
     @State private var scoreTitle = ""
     @State private var currentScore = 0
     @State private var questionsAsked = 1
+    @State private var flagChosen = -1
     
     @State private var countries = [
         "Estonia",
@@ -69,10 +70,13 @@ struct ContentView: View {
                     
                     ForEach(0..<3) { number in
                         Button {
-                            flagTapped(number)
+                            withAnimation {
+                                flagTapped(number)
+                            }
                         } label: {
                             FlagImage(flagName: countries[number])
                         }
+                        .rotation3DEffect(.degrees(flagChosen == number ? 360 : 0), axis: (x: 0, y: 1, z: 0))
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -104,6 +108,8 @@ struct ContentView: View {
     }
     
     func flagTapped(_ number: Int) {
+        flagChosen = number
+        
         if number == correctAnswer {
             currentScore += 1
             scoreTitle = "Correct! That is the flag of \(countries[number])"
@@ -120,6 +126,7 @@ struct ContentView: View {
     }
     
     func askQuestion() {
+        flagChosen = -1
         questionsAsked += 1
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
