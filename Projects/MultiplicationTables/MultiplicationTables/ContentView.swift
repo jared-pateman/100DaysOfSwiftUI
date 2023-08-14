@@ -7,24 +7,27 @@
 
 import SwiftUI
 
+struct Question {
+    var questionText: String
+    var answer: Int
+}
+
 struct ContentView: View {
     @State private var timesTablesToPractice = 2
     @State private var questionAmount: Int = 10
     @State private var gameInProgress = false
     let questionAmountOptions = [5, 10, 20]
     
+    @State private var questionsToAsk = [Question]()
     @State private var currentQuestion = 0
-    @State private var multiplicationNumber1 = 0
-    @State private var multiplicationNumber2 = 0
     @State private var currentScore = 0
-    @State private var userAnswer = 0
-    var correctAnswer: Int {
-        multiplicationNumber1 * multiplicationNumber2
-    }
+    @State private var userAnswer = ""
+    @FocusState private var answerIsFocused: Bool
     
     @State private var alertTitle = ""
     @State private var alertMessage = ""
     @State private var showingAnswer = false
+    @State private var showingSummary = false
 
     var body: some View {
         NavigationView {
@@ -66,7 +69,7 @@ struct ContentView: View {
                 .navigationTitle("Times Tables")
             } else {
                 VStack {
-                    Text("Question number: \(currentQuestion)")
+                    Text("Question number: \(currentQuestion + 1)")
                         .font(.largeTitle)
                         .padding()
                     
@@ -78,18 +81,19 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    Text("What is \(multiplicationNumber1) x \(multiplicationNumber2)?")
+                    Text(questionsToAsk[currentQuestion].questionText)
                         .font(.title2)
                     
-                    TextField("Answer", value: $userAnswer, format: .number)
+                    TextField("Answer", text: $userAnswer)
                         .keyboardType(.decimalPad)
                         .textFieldStyle(.roundedBorder)
+                        .focused($answerIsFocused)
                         .padding()
                     
                     Spacer()
                     
-                    Button("Enter Guess") {
-                        submitAnswer()
+                    Button("Check Answer") {
+                        checkAnswer(correctAnswer: questionsToAsk[currentQuestion].answer)
                     }
                     .frame(width: 150, height: 100)
                     .background(.blue)
@@ -98,6 +102,15 @@ struct ContentView: View {
                 }
                 .navigationTitle("Times Tables")
                 .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        
+                        Button("Done") {
+                            answerIsFocused = false
+                        }
+                    }
+                }
+                .toolbar {
                     Button("Quit") {
                         withAnimation {
                             quitPractice()
@@ -105,50 +118,62 @@ struct ContentView: View {
                     }
                 }
                 .alert(alertTitle, isPresented: $showingAnswer) {
-                    Button(
-                        currentQuestion < questionAmount ? "OK" : "Quit",
-                        action: currentQuestion < questionAmount ? newQuestion : quitPractice)
+                    Button("OK", action: newQuestion)
+                }
+                .alert("Game Over!", isPresented: $showingSummary) {
+                    Button("New Game", action: quitPractice)
                 } message: {
-                    Text("\(multiplicationNumber1) x \(multiplicationNumber2) = \(correctAnswer)")
+                    Text("You got \(currentScore)/\(questionAmount) correct!")
                 }
             }
         }
     }
     
     func startPractice() {
-        currentQuestion = 1
+        questionsToAsk.removeAll()
+        generateQuestions()
+        userAnswer = ""
         currentScore = 0
-        
-        multiplicationNumber1 = Int.random(in: 1...timesTablesToPractice)
-        multiplicationNumber2 = Int.random(in: 1...12)
-        
         gameInProgress = true
     }
     
+    func generateQuestions() {
+        for _ in 1...questionAmount {
+            let randomInt1 = Int.random(in: 1...timesTablesToPractice)
+            let randomInt2 = Int.random(in: 1...12)
+            let answer = randomInt1 * randomInt2
+            let question = Question(questionText: "What is \(randomInt1) x \(randomInt2)?", answer: answer)
+            
+            questionsToAsk.append(question)
+        }
+    }
+    
     func quitPractice() {
+        userAnswer = ""
+        questionsToAsk.removeAll()
         currentQuestion = 0
         currentScore = 0
-        
         gameInProgress = false
     }
     
-    func submitAnswer() {
-        if userAnswer == correctAnswer {
+    func checkAnswer(correctAnswer: Int) {
+        if Int(userAnswer) == correctAnswer {
             alertTitle = "Correct!"
             currentScore += 1
         } else {
             alertTitle = "Incorrect!"
-            currentScore -= 1
         }
         
-        showingAnswer = true
+        if currentQuestion == questionAmount - 1 {
+            showingSummary = true
+        } else {
+            showingAnswer = true
+        }
     }
     
     func newQuestion() {
+        userAnswer = ""
         currentQuestion += 1
-        
-        multiplicationNumber1 = Int.random(in: 1...timesTablesToPractice)
-        multiplicationNumber2 = Int.random(in: 1...12)
     }
 }
 
