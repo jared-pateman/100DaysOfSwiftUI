@@ -25,10 +25,21 @@ struct Arrow: Shape {
 }
 
 struct ContentView: View {
+    @State private var lineThickness: Double = 5.0
+    
     var body: some View {
         VStack {
             Arrow()
-                .stroke(Color.red, style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                .stroke(Color.red, style: StrokeStyle(lineWidth: CGFloat(lineThickness), lineCap: .round, lineJoin: .round))
+                .onTapGesture {
+                    withAnimation {
+                        if lineThickness == 5.0 {
+                            lineThickness = 20.0
+                        } else {
+                            lineThickness = 5.0
+                        }
+                    }
+                }
         }
         .padding()
     }
