@@ -7,13 +7,28 @@
 
 import SwiftUI
 
+struct Arrow: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+        path.addLine(to: CGPoint(x: rect.midX + 75, y: rect.midY))
+        path.addLine(to: CGPoint(x: rect.midX + 75, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.midX - 75, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.midX - 75, y: rect.midY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+        
+        return path
+    }
+}
+
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Arrow()
+                .stroke(Color.red, style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
         }
         .padding()
     }
