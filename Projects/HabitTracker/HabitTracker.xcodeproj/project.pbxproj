@@ -43,7 +43,6 @@
 		7F787DBF2A9B62EB000D4AFE = {
 			isa = PBXGroup;
 			children = (
-				7F59E32F2A9BE60D00CA451B /* ActivityDetailView.swift */,
 				7F787DCA2A9B62EB000D4AFE /* HabitTracker */,
 				7F787DC92A9B62EB000D4AFE /* Products */,
 			);
@@ -62,6 +61,7 @@
 			children = (
 				7F787DCB2A9B62EB000D4AFE /* HabitTrackerApp.swift */,
 				7F787DCD2A9B62EB000D4AFE /* ContentView.swift */,
+				7F59E32F2A9BE60D00CA451B /* ActivityDetailView.swift */,
 				7F787DD92A9B62FD000D4AFE /* Activities.swift */,
 				7F787DDB2A9B63DA000D4AFE /* Activity.swift */,
 				7F787DDD2A9B660B000D4AFE /* AddActivityView.swift */,
