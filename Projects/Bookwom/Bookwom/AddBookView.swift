@@ -53,6 +53,9 @@ struct AddBookView: View {
                         try? moc.save()
                         dismiss()
                     }
+                    .disabled(title.trimmingCharacters(in: .whitespaces).isEmpty ||
+                              author.trimmingCharacters(in: .whitespaces).isEmpty ||
+                              genre.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }
             .navigationTitle("Add Book")
