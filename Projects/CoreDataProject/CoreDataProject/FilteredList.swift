@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+enum FilterType: String, CaseIterable {
+    case beginsWith = "BEGINSWITH"
+    case beginsWithCaseInsensitive = "BEGINSWITH[c]"
+    case contains = "CONTAINS"
+    case containsCaseInsenstitive = "CONTAINS[c]"
+}
+
 struct FilteredList: View {
     @FetchRequest var fetchRequest: FetchedResults<Singer>
     
@@ -16,7 +23,7 @@ struct FilteredList: View {
         }
     }
     
-    init(filter: String, predicate: String) {
-        _fetchRequest = FetchRequest<Singer>(sortDescriptors: [], predicate: NSPredicate(format: "lastName \(predicate) %@", filter))
+    init(filter: String, predicate: FilterType) {
+        _fetchRequest = FetchRequest<Singer>(sortDescriptors: [], predicate: NSPredicate(format: "lastName \(predicate.rawValue) %@", filter))
     }
 }

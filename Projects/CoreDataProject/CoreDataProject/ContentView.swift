@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
     @State private var lastNameFilter = "A"
-    @State private var predicateFilter = "BEGINSWITH"
+    @State private var predicateFilter: FilterType = .beginsWith
 
     var body: some View {
         VStack {
@@ -34,22 +34,22 @@ struct ContentView: View {
             
             Button("Show Begins With A") {
                 lastNameFilter = "A"
-                predicateFilter = "BEGINSWITH"
+                predicateFilter = .beginsWith
             }
             
             Button("Show Contains A") {
                 lastNameFilter = "A"
-                predicateFilter = "CONTAINS[c]"
+                predicateFilter = .containsCaseInsenstitive
             }
             
             Button("Show Begins With S") {
                 lastNameFilter = "S"
-                predicateFilter = "BEGINSWITH"
+                predicateFilter = .beginsWith
             }
             
             Button("Show Contains S") {
                 lastNameFilter = "S"
-                predicateFilter = "CONTAINS[c]"
+                predicateFilter = .containsCaseInsenstitive
             }
         }
     }
