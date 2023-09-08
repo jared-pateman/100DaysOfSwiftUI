@@ -11,10 +11,11 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
     @State private var lastNameFilter = "A"
     @State private var predicateFilter: FilterType = .beginsWith
+    @State private var sortDescriptors: [SortDescriptor<Singer>] = []
 
     var body: some View {
         VStack {
-            FilteredList(filter: lastNameFilter, predicate: predicateFilter)
+            FilteredList(filter: lastNameFilter, predicate: predicateFilter, sortDescriptors: sortDescriptors)
             
             Button("Add Examples") {
                 let taylor = Singer(context: moc)
@@ -50,6 +51,14 @@ struct ContentView: View {
             Button("Show Contains S") {
                 lastNameFilter = "S"
                 predicateFilter = .containsCaseInsenstitive
+            }
+            
+            Button("Sort alphabetically by last name") {
+                sortDescriptors = [SortDescriptor(\.lastName)]
+            }
+            
+            Button("Sort reverse alphabetically by last name") {
+                sortDescriptors = [SortDescriptor(\.lastName, order: .reverse)]
             }
         }
     }

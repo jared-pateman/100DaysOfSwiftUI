@@ -23,7 +23,7 @@ struct FilteredList: View {
         }
     }
     
-    init(filter: String, predicate: FilterType) {
-        _fetchRequest = FetchRequest<Singer>(sortDescriptors: [], predicate: NSPredicate(format: "lastName \(predicate.rawValue) %@", filter))
+    init(filter: String, predicate: FilterType, sortDescriptors: [SortDescriptor<Singer>] = []) {
+        _fetchRequest = FetchRequest<Singer>(sortDescriptors: sortDescriptors, predicate: NSPredicate(format: "lastName \(predicate.rawValue) %@", filter))
     }
 }
