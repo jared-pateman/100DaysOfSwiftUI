@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var cachedUsers: FetchedResults<CachedUser>
+    
     @State private var users: [User] = []
     
     var body: some View {
         NavigationView {
-            List(users) { user in
+            List(cachedUsers) { user in
                 NavigationLink {
                     UserDetailView(user: user)
                 } label: {
                     VStack(alignment: .leading) {
-                        Text(user.name)
+                        Text(user.wrappedName)
                             .font(.title)
                         
                         Text("Currently active: \(String(user.isActive))")
@@ -28,9 +31,34 @@ struct ContentView: View {
             }
             .navigationTitle("FriendFace")
             .task {
-                if users.isEmpty {
+                if cachedUsers.isEmpty {
                     if let registeredUsers = await fetchUserInformation() {
                         users = registeredUsers
+                    }
+                    
+                    await MainActor.run {
+                        for user in users {
+                            let userToSave = CachedUser(context: moc)
+                            userToSave.id = user.id
+                            userToSave.name = user.name
+                            userToSave.isActive = user.isActive
+                            userToSave.age = Int16(user.age)
+                            userToSave.company = user.company
+                            userToSave.email = user.email
+                            userToSave.address = user.address
+                            userToSave.about = user.about
+                            userToSave.registered = user.registered
+                            userToSave.tags = user.tags.joined(separator: ",")
+                            
+                            for friend in user.friends {
+                                let friendToSave = CachedFriend(context: moc)
+                                friendToSave.id = friend.id
+                                friendToSave.name = friend.name
+                                userToSave.addToFriends(friendToSave)
+                            }
+                            
+                            try? moc.save()
+                        }
                     }
                 }
             }

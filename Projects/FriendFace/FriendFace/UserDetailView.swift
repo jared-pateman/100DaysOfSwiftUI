@@ -8,41 +8,41 @@
 import SwiftUI
 
 struct UserDetailView: View {
-    let user: User
+    let user: CachedUser
     
     var body: some View {
         Form {
             Section {
-                Text("Name: \(user.name)")
+                Text("Name: \(user.wrappedName)")
                 Text("Age: \(user.age)")
-                Text("Date Registered: \(user.registered.formatted(date: .abbreviated, time: .omitted))")
-                Text("Company: \(user.company)")
+                Text("Date Registered: \(user.wrappedRegistered.formatted(date: .abbreviated, time: .omitted))")
+                Text("Company: \(user.wrappedCompany)")
             } header: {
                 Text("User Information")
             }
             
             Section {
-                Text("Email: \(user.email)")
-                Text("Address: \(user.address)")
+                Text("Email: \(user.wrappedEmail)")
+                Text("Address: \(user.wrappedAddress)")
             } header: {
                 Text("Contact Details")
             }
             
             Section {
-                Text(user.about)
+                Text(user.wrappedAbout)
             } header: {
                 Text("About")
             }
             
             Section {
-                ForEach(user.friends) { friend in
-                    Text(friend.name)
+                ForEach(user.friendsList) { friend in
+                    Text(friend.wrappedName)
                 }
             } header: {
                 Text("Friends")
             }
         }
-        .navigationTitle(user.name)
+        .navigationTitle(user.wrappedName)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
