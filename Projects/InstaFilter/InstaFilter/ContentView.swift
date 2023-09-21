@@ -88,14 +88,21 @@ struct ContentView: View {
                 ImagePicker(image: $inputImage)
             }
             .confirmationDialog("Select a filter", isPresented: $showingFilterSheet) {
-                Button("Crystallize") { setFilter(CIFilter.crystallize()) }
-                Button("Edges") { setFilter(CIFilter.edges()) }
-                Button("Gaussian Blue") { setFilter(CIFilter.gaussianBlur()) }
-                Button("Pixellate") { setFilter(CIFilter.pixellate()) }
-                Button("Sepia Tone") { setFilter(CIFilter.sepiaTone()) }
-                Button("Unsharp Mask") { setFilter(CIFilter.unsharpMask()) }
-                Button("Vignette") { setFilter(CIFilter.vignette()) }
-                Button("Cancel", role: .cancel) { }
+                Group {
+                    Button("Crystallize") { setFilter(CIFilter.crystallize()) }
+                    Button("Edges") { setFilter(CIFilter.edges()) }
+                    Button("Gaussian Blur") { setFilter(CIFilter.gaussianBlur()) }
+                    Button("Pixellate") { setFilter(CIFilter.pixellate()) }
+                    Button("Sepia Tone") { setFilter(CIFilter.sepiaTone()) }
+                    Button("Unsharp Mask") { setFilter(CIFilter.unsharpMask()) }
+                    Button("Vignette") { setFilter(CIFilter.vignette()) }
+                    Button("Bloom") { setFilter(CIFilter.bloom()) }
+                    Button("Motion Blur") { setFilter(CIFilter.motionBlur()) }
+                    Button("Monochrome") { setFilter(CIFilter.colorMonochrome()) }
+                }
+                Group {
+                    Button("Cancel", role: .cancel) { }
+                }
             }
         }
     }
