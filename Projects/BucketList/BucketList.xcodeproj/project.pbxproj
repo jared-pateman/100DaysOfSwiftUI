@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F70F25D2AC216A200120A00 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70F25C2AC216A200120A00 /* Result.swift */; };
 		7FDC5B712AC05668007A1A20 /* BucketListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDC5B702AC05668007A1A20 /* BucketListApp.swift */; };
 		7FDC5B732AC05668007A1A20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDC5B722AC05668007A1A20 /* ContentView.swift */; };
 		7FDC5B752AC05669007A1A20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FDC5B742AC05669007A1A20 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F70F25C2AC216A200120A00 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		7FDC5B6D2AC05668007A1A20 /* BucketList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BucketList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FDC5B702AC05668007A1A20 /* BucketListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListApp.swift; sourceTree = "<group>"; };
 		7FDC5B722AC05668007A1A20 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			children = (
 				7FDC5B702AC05668007A1A20 /* BucketListApp.swift */,
 				7FDC5B722AC05668007A1A20 /* ContentView.swift */,
+				7F70F25C2AC216A200120A00 /* Result.swift */,
 				7FDC5B802AC061E1007A1A20 /* EditView.swift */,
 				7FDC5B7E2AC0595B007A1A20 /* Location.swift */,
 				7FDC5B742AC05669007A1A20 /* Assets.xcassets */,
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FDC5B732AC05668007A1A20 /* ContentView.swift in Sources */,
+				7F70F25D2AC216A200120A00 /* Result.swift in Sources */,
 				7FDC5B7F2AC0595B007A1A20 /* Location.swift in Sources */,
 				7FDC5B812AC061E1007A1A20 /* EditView.swift in Sources */,
 				7FDC5B712AC05668007A1A20 /* BucketListApp.swift in Sources */,
