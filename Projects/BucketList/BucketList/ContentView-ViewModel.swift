@@ -15,6 +15,8 @@ extension ContentView {
         @Published private(set) var locations: [Location]
         @Published var selectedPlace: Location?
         @Published var isUnlocked = false
+        @Published var showingBiometricsAlert = false
+        @Published var alertMessage = ""
         
         let savePath = FileManager.documentsDirectory.appendingPathComponent("SavedPlaces")
         
@@ -64,11 +66,15 @@ extension ContentView {
                         self.isUnlocked = true
                         }
                     } else {
-                        // error
+                        Task { @MainActor in
+                            self.alertMessage = "Error occurred trying to authenticate: \(authenticationError?.localizedDescription ?? "Unknown Error")"
+                            self.showingBiometricsAlert = true
+                        }
                     }
                 }
             } else {
-                // no biometrics
+                self.alertMessage = "Biometrics are not enabled or supported on this device."
+                self.showingBiometricsAlert = true
             }
         }
     }
