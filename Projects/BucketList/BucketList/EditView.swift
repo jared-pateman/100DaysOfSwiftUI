@@ -26,7 +26,7 @@ struct EditView: View {
                         Text("Loading...")
                     case .loaded:
                         ForEach(viewModel.pages, id: \.pageid) { page in
-                            /*@START_MENU_TOKEN@*/Text(page.title)/*@END_MENU_TOKEN@*/
+                            Text(page.title)
                                 .font(.headline)
                             + Text(": ")
                             + Text(page.description)
