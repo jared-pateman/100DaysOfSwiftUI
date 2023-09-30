@@ -23,6 +23,10 @@ struct ExpenseView: View {
             Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "GBP"))
                 .foregroundColor(item.amount < 10 ? .green : item.amount < 100 ? .black : .red)
         }
+        .accessibilityElement()
+        .accessibilityLabel("\(item.name), \(item.amount.formatted(.currency(code: Locale.current.currency?.identifier ?? "GBP")))")
+        .accessibilityHint("\(item.type) expense")
+
     }
 }
 
