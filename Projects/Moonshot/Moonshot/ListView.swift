@@ -41,6 +41,8 @@ struct ListView: View {
                     .overlay(RoundedRectangle(cornerRadius: 10)
                         .stroke(.lightBackground))
                 }
+                .accessibilityElement()
+                .accessibilityLabel(mission.displayName)
             }
             .listRowBackground(Color.darkBackground)
             .listRowSeparator(.hidden)

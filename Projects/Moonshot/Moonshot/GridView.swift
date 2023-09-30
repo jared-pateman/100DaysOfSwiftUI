@@ -45,6 +45,8 @@ struct GridView: View {
                         .overlay(RoundedRectangle(cornerRadius: 10)
                             .stroke(.lightBackground))
                     }
+                    .accessibilityElement()
+                    .accessibilityLabel(mission.displayName)
                 }
             }
             .padding([.horizontal, .bottom])
