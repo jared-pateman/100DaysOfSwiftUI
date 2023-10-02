@@ -51,8 +51,10 @@ struct AddPersonView: View {
             .toolbar {
                 ToolbarItem(placement: .automatic) {
                     Button("Save") {
-                        viewModel.savePerson(personName: personName, saveImage: saveImage)
-                        dismiss()
+                        if let location = viewModel.locationFetcher.lastKnownLocation {
+                            viewModel.savePerson(personName: personName, saveImage: saveImage)
+                            dismiss()
+                        }
                     }
                     .disabled(personName == "" || image == nil)
                 }

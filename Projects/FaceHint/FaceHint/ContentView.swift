@@ -16,7 +16,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.people.sorted(), id: \.id) { person in
+                ForEach(viewModel.people, id: \.id) { person in
                     NavigationLink {
                         UserDetailView(person: person)
                     } label: {
@@ -48,6 +48,7 @@ struct ContentView: View {
                 AddPersonView(viewModel: viewModel)
             }
         }
+        .onAppear(perform: viewModel.locationFetcher.start)
     }
 }
 

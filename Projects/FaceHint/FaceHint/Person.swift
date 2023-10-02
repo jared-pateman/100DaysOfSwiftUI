@@ -7,11 +7,18 @@
 
 import Foundation
 import SwiftUI
+import CoreLocation
 
 struct Person: Identifiable, Equatable, Codable, Comparable {
     var id = UUID()
     var name: String
     var picture: Data
+    var latitude: Double
+    var longitude: Double
+    
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
     
     static func <(lhs: Person, rhs: Person) -> Bool {
         lhs.name < rhs.name

@@ -7,10 +7,12 @@
 
 import Foundation
 import SwiftUI
+import MapKit
 
 
 @MainActor class ViewModel: ObservableObject {
     @Published private(set) var people: [Person]
+    let locationFetcher = LocationFetcher()
     
     init() {
         do {
@@ -38,9 +40,13 @@ import SwiftUI
     
     func savePerson(personName: String, saveImage: UIImage?) {
         if let jpegData = saveImage?.jpegData(compressionQuality: 0.8) {
-            let newPerson = Person(name: personName, picture: jpegData)
-            self.people.append(newPerson)
-            save()
+            if let location = locationFetcher.lastKnownLocation {
+                let latitude = location.latitude
+                let longitude = location.longitude
+                let newPerson = Person(name: personName, picture: jpegData, latitude: latitude, longitude: longitude)
+                self.people.append(newPerson)
+                save()
+            }
         }
     }
 }
