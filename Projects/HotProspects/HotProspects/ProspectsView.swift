@@ -14,10 +14,16 @@ struct ProspectsView: View {
         case none, contacted, uncontacted
     }
     
+    enum SortType {
+        case name, mostRecent
+    }
+    
     @EnvironmentObject var prospects: Prospects
     @State private var isShowingScanner = false
+    @State private var showingSortPicker = false
     
     let filter: FilterType
+    @State private var sort: SortType = .name
     
     var title: String {
         switch filter {
@@ -41,10 +47,19 @@ struct ProspectsView: View {
         }
     }
     
+    var sortedFilteredProspects: [Prospect] {
+        switch sort {
+        case .name:
+            return filteredProspects.sorted { $0.name < $1.name }
+        case .mostRecent:
+            return filteredProspects.sorted { $0.date > $1.date}
+        }
+    }
+    
     var body: some View {
         NavigationView {
             List {
-                ForEach(filteredProspects) { prospect in
+                ForEach(sortedFilteredProspects) { prospect in
                     HStack {
                         if prospect.isContacted {
                             Image(systemName: "person.crop.circle.badge.checkmark")
@@ -87,14 +102,33 @@ struct ProspectsView: View {
             }
             .navigationTitle(title)
             .toolbar {
-                Button {
-                    isShowingScanner = true
-                } label: {
-                    Label("Scan", systemImage: "qrcode.viewfinder")
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        isShowingScanner = true
+                    } label: {
+                        Label("Scan", systemImage: "qrcode.viewfinder")
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showingSortPicker = true
+                    } label: {
+                        Label("Sort by", systemImage: "arrow.up.arrow.down")
+                    }
                 }
             }
             .sheet(isPresented: $isShowingScanner) {
                 CodeScannerView(codeTypes: [.qr], simulatedData: "Paul Hudson\npaul@hackingwithswift.com", completion: handleScan)
+            }
+            .confirmationDialog("Sort By", isPresented: $showingSortPicker) {
+                Button("Name") {
+                    sort = .name
+                }
+                
+                Button("Most Recent") {
+                    sort = .mostRecent
+                }
             }
         }
     }
