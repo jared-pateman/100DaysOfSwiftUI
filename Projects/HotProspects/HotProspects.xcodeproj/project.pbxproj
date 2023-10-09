@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7F695DB72AD2CCF0004630C4 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F695DB62AD2CCF0004630C4 /* ImageSaver.swift */; };
+		7F6AE9FB2AD40519004E1B2E /* FileManager-DocumentsDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE9FA2AD40519004E1B2E /* FileManager-DocumentsDirectory.swift */; };
 		7F6D179A2AD04B2500BC5727 /* HotProspectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6D17992AD04B2500BC5727 /* HotProspectsApp.swift */; };
 		7F6D179C2AD04B2500BC5727 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6D179B2AD04B2500BC5727 /* ContentView.swift */; };
 		7F6D179E2AD04B2700BC5727 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F6D179D2AD04B2700BC5727 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		7F695DB62AD2CCF0004630C4 /* ImageSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageSaver.swift; path = ../../InstaFilter/InstaFilter/ImageSaver.swift; sourceTree = "<group>"; };
+		7F6AE9FA2AD40519004E1B2E /* FileManager-DocumentsDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager-DocumentsDirectory.swift"; sourceTree = "<group>"; };
 		7F6D17962AD04B2500BC5727 /* HotProspects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotProspects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F6D17992AD04B2500BC5727 /* HotProspectsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotProspectsApp.swift; sourceTree = "<group>"; };
 		7F6D179B2AD04B2500BC5727 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				7F6D179B2AD04B2500BC5727 /* ContentView.swift */,
 				7F6D17AB2AD04F3D00BC5727 /* Prospect.swift */,
 				7F6D17A72AD04B4500BC5727 /* ProspectsView.swift */,
+				7F6AE9FA2AD40519004E1B2E /* FileManager-DocumentsDirectory.swift */,
 				7F695DB62AD2CCF0004630C4 /* ImageSaver.swift */,
 				7F6D17A92AD04B4B00BC5727 /* MeView.swift */,
 				7F6D179D2AD04B2700BC5727 /* Assets.xcassets */,
@@ -158,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F6D17AA2AD04B4B00BC5727 /* MeView.swift in Sources */,
+				7F6AE9FB2AD40519004E1B2E /* FileManager-DocumentsDirectory.swift in Sources */,
 				7F695DB72AD2CCF0004630C4 /* ImageSaver.swift in Sources */,
 				7F6D17AC2AD04F3D00BC5727 /* Prospect.swift in Sources */,
 				7F6D17A82AD04B4500BC5727 /* ProspectsView.swift in Sources */,
