@@ -45,34 +45,42 @@ struct ProspectsView: View {
         NavigationView {
             List {
                 ForEach(filteredProspects) { prospect in
-                    VStack(alignment: .leading) {
-                        Text(prospect.name)
-                            .font(.headline)
-                        Text(prospect.emailAddress)
-                            .foregroundColor(.secondary)
-                    }
-                    .swipeActions {
+                    HStack {
                         if prospect.isContacted {
-                            Button {
-                                prospects.toggle(prospect)
-                            } label: {
-                                Label("Mark Uncontacted", systemImage: "person.crop.circle.badge.xmark")
-                            }
-                            .tint(.blue)
+                            Image(systemName: "person.crop.circle.badge.checkmark")
                         } else {
-                            Button {
-                                prospects.toggle(prospect)
-                            } label: {
-                                Label("Mark Contacted", systemImage: "person.crop.circle.fill.badge.checkmark")
+                            Image(systemName: "person.crop.circle.badge.xmark")
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text(prospect.name)
+                                .font(.headline)
+                            Text(prospect.emailAddress)
+                                .foregroundColor(.secondary)
+                        }
+                        .swipeActions {
+                            if prospect.isContacted {
+                                Button {
+                                    prospects.toggle(prospect)
+                                } label: {
+                                    Label("Mark Uncontacted", systemImage: "person.crop.circle.badge.xmark")
+                                }
+                                .tint(.blue)
+                            } else {
+                                Button {
+                                    prospects.toggle(prospect)
+                                } label: {
+                                    Label("Mark Contacted", systemImage: "person.crop.circle.fill.badge.checkmark")
+                                }
+                                .tint(.green)
+                                
+                                Button {
+                                    addNotification(for: prospect)
+                                } label: {
+                                    Label("Remind me", systemImage: "bell")
+                                }
+                                .tint(.orange)
                             }
-                            .tint(.green)
-                            
-                            Button {
-                                addNotification(for: prospect)
-                            } label: {
-                                Label("Remind me", systemImage: "bell")
-                            }
-                            .tint(.orange)
                         }
                     }
                 }
