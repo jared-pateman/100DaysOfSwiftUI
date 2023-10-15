@@ -43,15 +43,18 @@ struct ContentView: View {
                     .clipShape(Capsule())
                 
                 ZStack {
-                    ForEach(0..<cards.count, id: \.self) { index in
-                        CardView(card: cards[index]) {
+                    ForEach(cards) { card in
+                        CardView(card: card) { isCorrect in
+                            if !isCorrect {
+                                readdCard(from: getIndex(for: card))
+                            }
                             withAnimation {
-                                removeCard(at: index)
+                                removeCard(at: getIndex(for: card))
                             }
                         }
-                        .stacked(at: index, in: cards.count)
-                        .allowsHitTesting(index == cards.count - 1)
-                        .accessibilityHidden(index < cards.count - 1)
+                        .stacked(at: getIndex(for: card), in: cards.count)
+                        .allowsHitTesting(getIndex(for: card) == cards.count - 1)
+                        .accessibilityHidden(getIndex(for: card) < cards.count - 1)
                     }
                 }
                 .allowsHitTesting(timeRemaining > 0)
@@ -92,6 +95,7 @@ struct ContentView: View {
                     HStack {
                         Button {
                             withAnimation {
+                                readdCard(from: cards.count - 1)
                                 removeCard(at: cards.count - 1)
                             }
                         } label: {
@@ -144,6 +148,10 @@ struct ContentView: View {
         .onAppear(perform: resetCards)
     }
     
+    func getIndex(for card: Card) -> Int {
+        cards.firstIndex(where: { $0.id == card.id }) ?? 0
+    }
+    
     func loadData() {
         if let data = UserDefaults.standard.data(forKey: "Cards") {
             if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
@@ -166,6 +174,14 @@ struct ContentView: View {
         timeRemaining = 100
         isActive = true
         loadData()
+    }
+    
+    func readdCard(from index: Int) {
+        guard index >= 0 else { return }
+        
+        let currentCard = cards[index]
+        let newCard = Card(prompt: currentCard.prompt, answer: currentCard.answer)
+        cards.insert(newCard, at: 0)
     }
 }
 
