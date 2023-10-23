@@ -22,14 +22,14 @@ struct ContentView: View {
     let resorts: [Resort] = Bundle.main.decode("resorts.json")
     
     enum SortType {
-        case alphabetical, country
+        case none, alphabetical, country
     }
     
     @StateObject var favorites = Favorites()
     @State private var searchText = ""
     
     @State private var showingSortPicker = false
-    @State private var sort: SortType = .alphabetical
+    @State private var sort: SortType = .none
     
     var filteredResorts: [Resort] {
         if searchText.isEmpty {
@@ -41,6 +41,8 @@ struct ContentView: View {
     
     var sortedFilteredResorts: [Resort] {
         switch sort {
+        case .none:
+            return filteredResorts
         case .alphabetical:
             return filteredResorts.sorted { $0.name < $1.name }
         case .country:
@@ -99,6 +101,10 @@ struct ContentView: View {
                 
                 Button("Country") {
                     sort = .country
+                }
+                
+                Button("Default") {
+                    sort = .none
                 }
             }
             
