@@ -12,13 +12,16 @@ class Favorites: ObservableObject {
     private var resorts: Set<String>
     
     // Key we're using to read/write to with UserDefaults.
-    private let saveKey = "Favorites"
+    private let saveKey = FileManager.documentsDirectory.appendingPathComponent("Favorites")
     
     init() {
-        // load our saved data.
-        
-        // still here? Empty array
-        resorts = []
+        do {
+            let data = try Data(contentsOf: saveKey)
+            let decoded = try JSONDecoder().decode(Set<String>.self, from: data)
+            resorts = decoded
+        } catch {
+            resorts = []
+        }
     }
     
     // Return true if resort is in the resorts set.
@@ -42,5 +45,11 @@ class Favorites: ObservableObject {
     
     func save() {
         // Write data to device.
+        do {
+            let data = try JSONEncoder().encode(resorts)
+            try data.write(to: saveKey, options: [.atomicWrite, .completeFileProtection])
+        } catch {
+            print("Unable to save data.")
+        }
     }
 }

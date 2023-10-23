@@ -21,8 +21,15 @@ extension View {
 struct ContentView: View {
     let resorts: [Resort] = Bundle.main.decode("resorts.json")
     
+    enum SortType {
+        case alphabetical, country
+    }
+    
     @StateObject var favorites = Favorites()
     @State private var searchText = ""
+    
+    @State private var showingSortPicker = false
+    @State private var sort: SortType = .alphabetical
     
     var filteredResorts: [Resort] {
         if searchText.isEmpty {
@@ -32,9 +39,18 @@ struct ContentView: View {
         }
     }
     
+    var sortedFilteredResorts: [Resort] {
+        switch sort {
+        case .alphabetical:
+            return filteredResorts.sorted { $0.name < $1.name }
+        case .country:
+            return filteredResorts.sorted { $0.country < $1.country }
+        }
+    }
+    
     var body: some View {
         NavigationView {
-            List(filteredResorts) { resort in
+            List(sortedFilteredResorts) { resort in
                 NavigationLink {
                     ResortView(resort: resort)
                 } label: {
@@ -67,6 +83,24 @@ struct ContentView: View {
             }
             .navigationTitle("Resorts")
             .searchable(text: $searchText, prompt: "Search for a resort")
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showingSortPicker = true
+                    } label: {
+                        Label("Sort by", systemImage: "arrow.up.arrow.down")
+                    }
+                }
+            }
+            .confirmationDialog("Sort By", isPresented: $showingSortPicker) {
+                Button("Name") {
+                    sort = .alphabetical
+                }
+                
+                Button("Country") {
+                    sort = .country
+                }
+            }
             
             WelcomeView()
         }
